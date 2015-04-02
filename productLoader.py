@@ -11,7 +11,6 @@ def productsAsJson(filename):
             json_data_list.append(data)
     return json_data_list
 
-
 def categoryWords(category_list):
     
     category_words_set = set()
