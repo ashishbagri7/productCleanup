@@ -1,14 +1,20 @@
 
 import json
 import re
-from wordsManipulator import cleanPuntuation
 
-def productsAsJson(filename):
+def productsAsJson(filename, N=None):
     json_data_list = []
+    num_loaded = 0
+    
     with open(filename) as f:
         for line in f:
             data = json.loads(line.strip())
             json_data_list.append(data)
+            num_loaded += 1
+            if N is not None:
+                if num_loaded >= N:
+                    break
+    
     return json_data_list
 
 def categoryWords(category_list):

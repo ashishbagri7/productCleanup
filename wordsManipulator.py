@@ -1,19 +1,20 @@
 
 
 import enchant
+import re
 import string
+
 
 # yang : 'which' , 'para' : 'the'
 ignore_words = {'yang', 'para'}
+
 englishDict = enchant.Dict("en_US")
-exclude_punctuation = set(string.punctuation)
 
 def ignoreWord(word):
     if word in ignore_words:
         return True
     
     return False
-
 
 def englishWords(words, englishDict, exclude):
     engwords = []
@@ -32,6 +33,9 @@ def englishWords(words, englishDict, exclude):
     return engwords
 
 
+def asciiLower(mystring):
+    return mystring.encode('ascii', 'ignore').rstrip().lower()
+
 def isEnglish(word):
     global englishDict
     try:
@@ -40,6 +44,34 @@ def isEnglish(word):
         print e
         return False
     
-def cleanPuntuation(word):
-    w = ''.join(ch for ch in word if ch not in exclude_punctuation)
-    return w
+'''
+Ignore punctuations from a word/line and return 
+the cleaned out word
+'''
+def ignorePunctuations(word):
+    x = re.split('\W+', word)
+    x = filter(None, x)
+    return ''.join(x)
+ 
+'''
+Takes in an entity and returns the set of words per line of this entity
+
+take an entity: could be description, title, catgories
+ makes it into a list of list with all the individual words
+ stripped out of all punctuations
+'''
+def entity2words(entity):
+    # convert to ascii and lower it
+    entity = asciiLower(entity)
+    # split it to individual lines
+    lines = entity.split("\n")
+    return_list = []
+    # for each line, there must be a list
+    for line in lines:
+        x = re.split('\W+', line)
+        x = filter(None, x)
+        if len(x):
+            return_list.append(x)
+
+    # list of list
+    return return_list
