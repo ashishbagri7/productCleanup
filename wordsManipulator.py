@@ -44,9 +44,14 @@ def isEnglish(word):
         print e
         return False
     
+
+def stripPunctuations(word):
+    return word.rstrip('\'\"-,.:;!?\n ')    
+    
 '''
 Ignore punctuations from a word/line and return 
 the cleaned out word
+This ignore spaces in between !
 '''
 def ignorePunctuations(word):
     x = re.split('\W+', word)
