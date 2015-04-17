@@ -4,4 +4,4 @@ output/
 testcodes/
 memorytrain/
 nlptrain/
-
+*.pyc
